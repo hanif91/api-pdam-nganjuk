@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'Api Perumdam Trunojoyo',
-  description: 'Api Perumdam Trunojoyo',
+  title: 'Api PDAM NGANJUK',
+  description: 'Api PDAM NGANJUK',
 }
 
 export default function RootLayout({
