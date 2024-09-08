@@ -1,0 +1,940 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model adm_dm {
+  jns String? @db.Char(1)
+  adm Int?
+  dm  Int?
+
+  @@ignore
+}
+
+model angs_sb {
+  no_sam  String    @default("") @db.VarChar(10)
+  periode DateTime  @default(dbgenerated("'0000-00-00'")) @db.Date
+  biaya   Int?
+  ppn     Int?
+  jml     Int?
+  ang     Int?
+  angke   Int?
+  tgl_cet DateTime? @db.Date
+  tgl_bay DateTime? @db.Date
+
+  @@id([no_sam, periode])
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model awal_tr {
+  bln DateTime? @db.Date
+
+  @@ignore
+}
+
+model cpel {
+  id      String    @id @default("") @db.VarChar(15)
+  nm      String?   @db.VarChar(30)
+  al      String?   @db.VarChar(50)
+  ktp     String?   @db.VarChar(30)
+  rt      String?   @db.VarChar(3)
+  rw      String?   @db.VarChar(3)
+  kec     String?   @db.VarChar(30)
+  des     String?   @db.VarChar(30)
+  telp    String?   @db.VarChar(15)
+  pek     String?   @db.VarChar(20)
+  pt      String?   @db.VarChar(3)
+  kep     String?   @db.VarChar(20)
+  kran    String?   @db.VarChar(3)
+  jual    String?   @db.VarChar(5)
+  sedia   String?   @db.VarChar(5)
+  tgl_daf DateTime? @db.Date
+  tgl_bap DateTime? @db.Date
+  idu     String?   @db.VarChar(20)
+  nmu     String?   @db.VarChar(30)
+  nosam   String?   @db.VarChar(15)
+  gol     String?   @db.VarChar(2)
+  idpkt   String?   @db.VarChar(3)
+}
+
+model customer {
+  id          Int?      @unique(map: "nosamba")
+  cab         String?   @db.VarChar(2)
+  wil         String?   @db.VarChar(1)
+  subwil      String?   @db.VarChar(3)
+  jln         String?   @db.VarChar(4)
+  jlnb        String?   @db.VarChar(3)
+  urut        String?   @db.VarChar(5)
+  no_lama     String?   @db.VarChar(10)
+  nosam       String    @unique(map: "nosame") @default("") @db.VarChar(10)
+  nosaml      String    @default("") @db.VarChar(15)
+  nama        String?   @db.VarChar(30)
+  status      String?   @db.VarChar(1)
+  al          String?   @db.VarChar(30)
+  rt          String?   @db.VarChar(3)
+  rw          String?   @db.VarChar(3)
+  desa        String?   @db.VarChar(30)
+  kec         String?   @db.VarChar(30)
+  telp        String?   @db.VarChar(15)
+  al_lama     String?   @db.VarChar(30)
+  tarif       String?   @db.VarChar(2)
+  gol         String?   @db.VarChar(1)
+  nmgol       String?   @db.VarChar(20)
+  lkt         String?   @db.VarChar(3)
+  tgl_pasang  DateTime? @db.Date
+  tgl_tutup   DateTime? @db.Date
+  tgl_bongkar DateTime? @db.Date
+  tgl_buka    DateTime? @db.Date
+  wm          String?   @db.VarChar(1)
+  merk        String?   @db.VarChar(12)
+  sn          String?   @db.VarChar(12)
+  ket         String?   @db.VarChar(255)
+  mbr         String?   @db.VarChar(1)
+
+  @@id([nosam, nosaml])
+  @@index([tarif], map: "tarife")
+  @@index([cab, wil, subwil, jlnb], map: "unit")
+}
+
+model customer_230126 {
+  id          Int       @default(autoincrement())
+  cab         String?   @db.VarChar(2)
+  wil         String?   @db.VarChar(1)
+  subwil      String?   @db.VarChar(3)
+  jln         String?   @db.VarChar(4)
+  jlnb        String?   @db.VarChar(3)
+  urut        String?   @db.VarChar(5)
+  no_lama     String?   @db.VarChar(10)
+  nosam       String    @unique(map: "nosamba") @default("") @db.VarChar(10)
+  nosaml      String    @default("") @db.VarChar(15)
+  nama        String?   @db.VarChar(30)
+  status      String?   @db.VarChar(1)
+  al          String?   @db.VarChar(30)
+  rt          String?   @db.VarChar(3)
+  rw          String?   @db.VarChar(3)
+  desa        String?   @db.VarChar(30)
+  kec         String?   @db.VarChar(30)
+  telp        String?   @db.VarChar(15)
+  al_lama     String?   @db.VarChar(30)
+  tarif       String?   @db.VarChar(2)
+  gol         String?   @db.VarChar(1)
+  nmgol       String?   @db.VarChar(20)
+  lkt         String?   @db.VarChar(3)
+  tgl_pasang  DateTime? @db.Date
+  tgl_tutup   DateTime? @db.Date
+  tgl_bongkar DateTime? @db.Date
+  tgl_buka    DateTime? @db.Date
+  wm          String?   @db.VarChar(1)
+  merk        String?   @db.VarChar(12)
+  sn          String?   @db.VarChar(12)
+  ket         String?   @db.VarChar(255)
+
+  @@id([id, nosaml, nosam])
+  @@index([tarif], map: "tarife")
+}
+
+model customer_230311 {
+  id          Int       @default(autoincrement())
+  cab         String?   @db.VarChar(2)
+  wil         String?   @db.VarChar(1)
+  subwil      String?   @db.VarChar(3)
+  jln         String?   @db.VarChar(4)
+  jlnb        String?   @db.VarChar(3)
+  urut        String?   @db.VarChar(5)
+  no_lama     String?   @db.VarChar(10)
+  nosam       String    @unique(map: "nosamba") @default("") @db.VarChar(10)
+  nosaml      String    @default("") @db.VarChar(15)
+  nama        String?   @db.VarChar(30)
+  status      String?   @db.VarChar(1)
+  al          String?   @db.VarChar(30)
+  rt          String?   @db.VarChar(3)
+  rw          String?   @db.VarChar(3)
+  desa        String?   @db.VarChar(30)
+  kec         String?   @db.VarChar(30)
+  telp        String?   @db.VarChar(15)
+  al_lama     String?   @db.VarChar(30)
+  tarif       String?   @db.VarChar(2)
+  gol         String?   @db.VarChar(1)
+  nmgol       String?   @db.VarChar(20)
+  lkt         String?   @db.VarChar(3)
+  tgl_pasang  DateTime? @db.Date
+  tgl_tutup   DateTime? @db.Date
+  tgl_bongkar DateTime? @db.Date
+  tgl_buka    DateTime? @db.Date
+  wm          String?   @db.VarChar(1)
+  merk        String?   @db.VarChar(12)
+  sn          String?   @db.VarChar(12)
+  ket         String?   @db.VarChar(255)
+  mbr         String?   @db.VarChar(1)
+
+  @@id([id, nosaml, nosam])
+  @@index([tarif], map: "tarife")
+}
+
+model dlle {
+  no    Int     @id @default(autoincrement())
+  dll   String? @unique(map: "jene") @db.VarChar(20)
+  isine Bytes?
+}
+
+model dump_hisbayar {
+  periode DateTime  @db.Date
+  tgl_byr DateTime? @db.Date
+  jam     DateTime? @db.Time(0)
+  no_sam  String    @default("") @db.VarChar(10)
+  gol     String?   @default("'") @db.VarChar(3)
+  lama    Int?      @default(0)
+  baru    Int?      @default(0)
+  m3      Int       @default(0)
+  m31     Int       @default(0)
+  m32     Int       @default(0)
+  m33     Int       @default(0)
+  m34     Int       @default(0)
+  rp1     Int       @default(0)
+  rp2     Int       @default(0)
+  rp3     Int       @default(0)
+  rp4     Int       @default(0)
+  hrgair  Int       @default(0)
+  dm      Int       @default(0)
+  adm     Int       @default(0)
+  tot     Int       @default(0)
+  meterai Int       @default(0)
+  denda   Int?      @default(0)
+  norek   String    @default("0") @db.VarChar(11)
+  kas     String?   @db.VarChar(20)
+  rekna   Int       @default(0)
+  angke   String?   @db.VarChar(7)
+  user    String?   @db.VarChar(20)
+  bw      String?   @db.VarChar(5)
+  lns     String?   @db.VarChar(2)
+  nsb     String?   @db.VarChar(8)
+  nosaml  String    @default("") @db.VarChar(15)
+  komp    String?   @db.VarChar(1)
+
+  @@id([nosaml, periode, no_sam])
+  @@unique([periode, no_sam], map: "peri")
+  @@index([gol], map: "gol")
+  @@index([nosaml], map: "nos")
+  @@index([nsb], map: "nsbe")
+  @@index([periode], map: "tang")
+  @@index([tgl_byr], map: "tb")
+}
+
+model dumppen {
+  kode      String?  @unique(map: "kode") @db.VarChar(30)
+  nosamb    String   @db.VarChar(50)
+  periode   String   @db.VarChar(6)
+  nama      String?  @db.VarChar(100)
+  alamat    String?  @db.VarChar(200)
+  koderayon String?  @db.VarChar(50)
+  kodegol   String?  @db.VarChar(50)
+  rekair    Decimal? @db.Decimal(18, 2)
+  stspel    String?  @db.Char(1)
+
+  @@id([nosamb, periode])
+}
+
+model dumppiu {
+  kode      String?  @unique(map: "kode") @db.VarChar(30)
+  nosamb    String   @db.VarChar(50)
+  periode   String   @db.VarChar(6)
+  nama      String?  @db.VarChar(100)
+  alamat    String?  @db.VarChar(200)
+  koderayon String?  @db.VarChar(50)
+  kodegol   String?  @db.VarChar(50)
+  rekair    Decimal? @db.Decimal(18, 2)
+  stspel    String?  @db.Char(1)
+
+  @@id([nosamb, periode])
+}
+
+model failed_jobs {
+  id         BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  uuid       String   @unique(map: "failed_jobs_uuid_unique") @db.VarChar(255)
+  connection String   @db.Text
+  queue      String   @db.Text
+  payload    String   @db.LongText
+  exception  String   @db.LongText
+  failed_at  DateTime @default(now()) @db.Timestamp(0)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model gran {
+  name  String? @db.VarChar(20)
+  id    Int?
+  id_in Int?
+
+  @@ignore
+}
+
+model histori_byr {
+  periode DateTime  @db.Date
+  tgl_byr DateTime? @db.Date
+  jam     DateTime? @db.Time(0)
+  no_sam  String    @default("") @db.VarChar(10)
+  gol     String?   @default("'") @db.VarChar(3)
+  lama    Int?      @default(0)
+  baru    Int?      @default(0)
+  m3      Int       @default(0)
+  m31     Int       @default(0)
+  m32     Int       @default(0)
+  m33     Int       @default(0)
+  m34     Int       @default(0)
+  rp1     Int       @default(0)
+  rp2     Int       @default(0)
+  rp3     Int       @default(0)
+  rp4     Int       @default(0)
+  hrgair  Int       @default(0)
+  dm      Int       @default(0)
+  adm     Int       @default(0)
+  tot     Int       @default(0)
+  meterai Int       @default(0)
+  denda   Int?      @default(0)
+  norek   String    @default("0") @db.VarChar(11)
+  kas     String?   @db.VarChar(20)
+  rekna   Int       @default(0)
+  angke   String?   @db.VarChar(7)
+  user    String?   @db.VarChar(20)
+  bw      String?   @db.VarChar(5)
+  lns     String?   @db.VarChar(2)
+  nsb     String?   @db.VarChar(8)
+  nosaml  String    @default("") @db.VarChar(15)
+  komp    String?   @db.VarChar(1)
+
+  @@id([nosaml, periode, no_sam])
+  @@unique([periode, no_sam], map: "peri")
+  @@index([gol], map: "gol")
+  @@index([nosaml], map: "nos")
+  @@index([no_sam], map: "nosam")
+  @@index([nsb], map: "nsbe")
+  @@index([periode], map: "tang")
+  @@index([tgl_byr], map: "tb")
+}
+
+model histori_byr_20 {
+  periode DateTime  @default(dbgenerated("'0000-00-00'")) @db.Date
+  tgl_byr DateTime? @db.Date
+  jam     DateTime? @db.Time(0)
+  no_sam  String    @default("") @db.VarChar(10)
+  gol     String?   @default("'") @db.VarChar(3)
+  lama    Int?      @default(0)
+  baru    Int?      @default(0)
+  m3      Int       @default(0)
+  m31     Int       @default(0)
+  m32     Int       @default(0)
+  m33     Int       @default(0)
+  m34     Int       @default(0)
+  rp1     Int       @default(0)
+  rp2     Int       @default(0)
+  rp3     Int       @default(0)
+  rp4     Int       @default(0)
+  hrgair  Int       @default(0)
+  dm      Int       @default(0)
+  adm     Int       @default(0)
+  tot     Int       @default(0)
+  meterai Int       @default(0)
+  denda   Int?      @default(0)
+  norek   String    @default("0") @db.VarChar(11)
+  kas     String?   @db.VarChar(20)
+  rekna   Int       @default(0)
+  angke   String?   @db.VarChar(7)
+  user    String?   @db.VarChar(20)
+  bw      String?   @db.VarChar(5)
+  lns     String?   @db.VarChar(2)
+  nsb     String?   @db.VarChar(8)
+  nosaml  String    @default("") @db.VarChar(15)
+  komp    String?   @db.VarChar(1)
+
+  @@id([nosaml, periode, no_sam])
+  @@unique([periode, no_sam], map: "peri")
+  @@index([gol], map: "gol")
+  @@index([nosaml], map: "nos")
+  @@index([nsb], map: "nsbe")
+  @@index([periode], map: "tang")
+  @@index([tgl_byr], map: "tb")
+}
+
+model histori_byr_coba {
+  periode DateTime  @default(dbgenerated("'0000-00-00'")) @db.Date
+  tgl_byr DateTime? @db.Date
+  jam     DateTime? @db.Time(0)
+  no_sam  String    @default("") @db.VarChar(10)
+  gol     String?   @default("'") @db.VarChar(3)
+  lama    Int?      @default(0)
+  baru    Int?      @default(0)
+  m3      Int       @default(0)
+  m31     Int       @default(0)
+  m32     Int       @default(0)
+  m33     Int       @default(0)
+  m34     Int       @default(0)
+  rp1     Int       @default(0)
+  rp2     Int       @default(0)
+  rp3     Int       @default(0)
+  rp4     Int       @default(0)
+  hrgair  Int       @default(0)
+  dm      Int       @default(0)
+  adm     Int       @default(0)
+  tot     Int       @default(0)
+  meterai Int       @default(0)
+  denda   Int?      @default(0)
+  norek   String    @default("0") @db.VarChar(11)
+  kas     String?   @db.VarChar(20)
+  rekna   Int       @default(0)
+  angke   String?   @db.VarChar(7)
+  user    String?   @db.VarChar(20)
+  bw      String?   @db.VarChar(5)
+  lns     String?   @db.VarChar(2)
+  nsb     String?   @db.VarChar(8)
+  nosaml  String    @default("") @db.VarChar(15)
+  komp    String?   @db.VarChar(1)
+
+  @@id([nosaml, periode, no_sam])
+  @@unique([periode, no_sam], map: "peri")
+  @@index([gol], map: "gol")
+  @@index([nosaml], map: "nos")
+  @@index([nsb], map: "nsbe")
+  @@index([periode], map: "tang")
+  @@index([tgl_byr], map: "tb")
+}
+
+model histori_byr_rev {
+  periode DateTime  @default(dbgenerated("'0000-00-00'")) @db.Date
+  tgl_byr DateTime? @db.Date
+  userlns String?   @db.VarChar(20)
+  jam     DateTime? @db.Time(0)
+  no_sam  String    @default("") @db.VarChar(10)
+  gol     String?   @default("'") @db.VarChar(3)
+  lama    Int?      @default(0)
+  baru    Int?      @default(0)
+  m3      Int       @default(0)
+  m31     Int       @default(0)
+  m32     Int       @default(0)
+  m33     Int       @default(0)
+  m34     Int       @default(0)
+  rp1     Int       @default(0)
+  rp2     Int       @default(0)
+  rp3     Int       @default(0)
+  rp4     Int       @default(0)
+  hrgair  Int       @default(0)
+  dm      Int       @default(0)
+  adm     Int       @default(0)
+  tot     Int       @default(0)
+  meterai Int       @default(0)
+  denda   Int?      @default(0)
+  norek   String    @default("0") @db.VarChar(11)
+  kas     String?   @db.VarChar(20)
+  rekna   Int       @default(0)
+  angke   String?   @db.VarChar(7)
+  user    String?   @db.VarChar(20)
+  bw      String?   @db.VarChar(5)
+  lns     String?   @db.VarChar(2)
+  nsb     String?   @db.VarChar(8)
+  nosaml  String    @default("") @db.VarChar(15)
+  komp    String?   @db.VarChar(1)
+  tgl     DateTime? @db.Date
+  jaml    DateTime? @db.Time(0)
+
+  @@id([nosaml, periode, no_sam])
+  @@index([gol], map: "gol")
+  @@index([nosaml], map: "nos")
+  @@index([nsb], map: "nsbe")
+  @@index([periode], map: "tang")
+  @@index([tgl_byr], map: "tb")
+}
+
+model ijinwm {
+  tgl     DateTime? @db.Date
+  no      String    @id @db.VarChar(10)
+  kat     String?   @db.VarChar(20)
+  jns     String?   @db.VarChar(20)
+  nosam   String?   @db.VarChar(15)
+  nm      String?   @db.VarChar(30)
+  al      String?   @db.VarChar(30)
+  wm      String?   @db.VarChar(20)
+  ket     String?   @db.VarChar(150)
+  tgl_exe DateTime? @db.Date
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model kec {
+  kd_kec String? @db.VarChar(2)
+  kec    String? @db.VarChar(30)
+  kd_des String? @db.VarChar(2)
+  des    String? @db.VarChar(30)
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model kor_pel {
+  tgl    DateTime? @db.DateTime(0)
+  user   String?   @db.VarChar(20)
+  no_sam String?   @db.VarChar(10)
+  dari   String?   @db.VarChar(100)
+  ke     String?   @db.VarChar(100)
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model lhk {
+  tgl  DateTime? @db.Date
+  un   String?   @db.VarChar(2)
+  kd   String?   @db.VarChar(3)
+  item String?   @db.VarChar(30)
+  kas  Decimal?  @db.Decimal(15, 2)
+  bank Decimal?  @db.Decimal(15, 2)
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model log_time {
+  id  String? @db.VarChar(20)
+  act String? @db.VarChar(20)
+  jam String? @db.VarChar(20)
+
+  @@ignore
+}
+
+model lppa {
+  tgl_byr DateTime? @db.Date
+  periode DateTime  @db.Date
+  norek   String?   @db.VarChar(11)
+  no_sam  String    @db.VarChar(10)
+  nama    String?   @db.VarChar(30)
+  kec     String?   @db.VarChar(30)
+  singk   String?   @db.VarChar(4)
+  tarif   String?   @db.VarChar(20)
+  m3      Int?
+  ha      Int?
+  adm     Int?
+  dm      Int?
+  ppn     Int?
+  na      Int?
+  angs    String?   @db.VarChar(10)
+  denda   Int?
+  ppnd    Int?
+  meterai Int?
+  bk      Int?
+  user    String?   @db.VarChar(20)
+  lkt     String?   @db.VarChar(20)
+  tglreal DateTime? @db.DateTime(0)
+
+  @@id([periode, no_sam])
+  @@index([lkt], map: "lkt")
+  @@index([tarif], map: "tarif")
+  @@index([tgl_byr], map: "tgl_byr")
+  @@index([user], map: "user")
+}
+
+model lppa_20 {
+  tgl_byr DateTime? @db.Date
+  periode DateTime  @db.Date
+  norek   String?   @db.VarChar(11)
+  no_sam  String    @db.VarChar(10)
+  nama    String?   @db.VarChar(30)
+  kec     String?   @db.VarChar(30)
+  singk   String?   @db.VarChar(4)
+  tarif   String?   @db.VarChar(20)
+  m3      Int?
+  ha      Int?
+  adm     Int?
+  dm      Int?
+  ppn     Int?
+  na      Int?
+  angs    String?   @db.VarChar(10)
+  denda   Int?
+  meterai Int?
+  bk      Int?
+  user    String?   @db.VarChar(20)
+  lkt     String?   @db.VarChar(20)
+  tglreal DateTime? @db.DateTime(0)
+
+  @@id([periode, no_sam])
+}
+
+model lppna {
+  no      String    @id @db.VarChar(12)
+  tgl     DateTime? @db.Date
+  un      String?   @db.VarChar(2)
+  nosam   String?   @db.VarChar(15)
+  nm      String?   @db.VarChar(30)
+  al      String?   @db.VarChar(30)
+  daf     Int?
+  sb      Int?
+  wm      Int?
+  lain    Int?
+  ppn     Int?
+  nom     Int?
+  jns     String?   @db.VarChar(50)
+  kdakun  String?   @db.VarChar(10)
+  ket     String?   @db.VarChar(200)
+  userid  String?   @db.VarChar(20)
+  val     String?   @db.VarChar(1)
+  userval String?   @db.VarChar(20)
+  tgllns  DateTime? @db.Date
+  userlns String?   @db.VarChar(20)
+}
+
+model lppna_230227 {
+  no      String    @id @db.VarChar(12)
+  tgl     DateTime? @db.Date
+  un      String?   @db.VarChar(2)
+  nosam   String?   @db.VarChar(15)
+  nm      String?   @db.VarChar(30)
+  al      String?   @db.VarChar(30)
+  daf     Int?
+  sb      Int?
+  wm      Int?
+  lain    Int?
+  ppn     Int?
+  nom     Int?
+  jns     String?   @db.VarChar(50)
+  ket     String?   @db.VarChar(200)
+  userid  String?   @db.VarChar(20)
+  val     String?   @db.VarChar(1)
+  userval String?   @db.VarChar(20)
+  tgllns  DateTime? @db.Date
+  userlns String?   @db.VarChar(20)
+}
+
+model menu {
+  id    Int     @id @default(autoincrement())
+  id_in Int?
+  induk String? @db.VarChar(100)
+  menu  String? @db.VarChar(100)
+  dll   String? @db.VarChar(255)
+  tgl   String? @db.VarChar(20)
+}
+
+model migrations {
+  id        Int    @id @default(autoincrement()) @db.UnsignedInt
+  migration String @db.VarChar(255)
+  batch     Int
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model mst_byrna {
+  jns    String? @db.VarChar(35)
+  nom    Int?
+  kdakun String? @db.VarChar(10)
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model mst_lhk {
+  kd   String? @db.VarChar(3)
+  item String? @db.VarChar(30)
+
+  @@ignore
+}
+
+model nm_unit {
+  un     String  @id @db.VarChar(2)
+  nm_un  String? @db.VarChar(25)
+  kaun   String? @db.VarChar(25)
+  nik    String? @db.VarChar(12)
+  kasir1 String? @db.VarChar(25)
+  nik1   String? @db.VarChar(12)
+  kasir2 String? @db.VarChar(25)
+  nik2   String? @db.VarChar(12)
+  kasir3 String? @db.VarChar(25)
+  nik3   String? @db.VarChar(12)
+}
+
+model paket_hrg {
+  kd  Int     @id @default(autoincrement())
+  nm  String? @db.VarChar(30)
+  nom Int?
+  ket String? @db.VarChar(150)
+}
+
+model password_reset_tokens {
+  email      String    @id @db.VarChar(255)
+  token      String    @db.VarChar(255)
+  created_at DateTime? @db.Timestamp(0)
+}
+
+model peg {
+  id  Int     @id @default(autoincrement())
+  nm  String? @db.VarChar(30)
+  jab String? @db.VarChar(40)
+  nik String? @db.VarChar(20)
+}
+
+model pejabat {
+  id  Int     @id @default(autoincrement())
+  nm  String? @db.VarChar(30)
+  jab String? @db.VarChar(40)
+  nik String? @db.VarChar(20)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model pembatalan {
+  tgl    DateTime? @db.DateTime(0)
+  bln    DateTime? @db.Date
+  no_sam String?   @db.VarChar(10)
+  user   String?   @db.VarChar(20)
+
+  @@ignore
+}
+
+model periodepiu {
+  periode String @id @db.VarChar(6)
+}
+
+model periodepiu_pen {
+  periode String @id @db.VarChar(6)
+}
+
+model personal_access_tokens {
+  id             BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  tokenable_type String    @db.VarChar(255)
+  tokenable_id   BigInt    @db.UnsignedBigInt
+  name           String    @db.VarChar(255)
+  token          String    @unique(map: "personal_access_tokens_token_unique") @db.VarChar(64)
+  abilities      String?   @db.Text
+  last_used_at   DateTime? @db.Timestamp(0)
+  expires_at     DateTime? @db.Timestamp(0)
+  created_at     DateTime? @db.Timestamp(0)
+  updated_at     DateTime? @db.Timestamp(0)
+
+  @@index([tokenable_type, tokenable_id], map: "personal_access_tokens_tokenable_type_tokenable_id_index")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model piutangsum {
+  rekair  Decimal? @db.Decimal(15, 2)
+  lbr     Decimal? @db.Decimal(15, 2)
+  periode String?  @db.VarChar(6)
+  kodegol String?  @db.VarChar(4)
+
+  @@ignore
+}
+
+model piutangsum_pel {
+  rekair Decimal? @db.Decimal(15, 2)
+  lbr    Decimal? @db.Decimal(15, 2)
+  minper String?  @db.VarChar(6)
+  maxper String?  @db.VarChar(6)
+  nosamb String   @id @db.VarChar(20)
+  stspel String?  @db.Char(2)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model pos {
+  nosam   String?   @db.VarChar(15)
+  periode DateTime? @db.Date
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model rpt {
+  dll  String? @db.VarChar(20)
+  nama String? @db.VarChar(30)
+  rpt  Bytes?
+
+  @@ignore
+}
+
+model set_kas_nonair {
+  kode_jenis String  @id @db.VarChar(10)
+  jenis      String? @db.VarChar(35)
+  master_non String? @db.VarChar(35)
+  master_det String? @db.VarChar(50)
+}
+
+model tag_tnpd {
+  periode DateTime  @db.Date
+  tgl_byr DateTime? @db.Date
+  jam     DateTime? @db.Time(0)
+  no_sam  String    @db.VarChar(15)
+  gol     String    @default("'") @db.VarChar(3)
+  lama    Int       @default(0)
+  baru    Int       @default(0)
+  m3      Int       @default(0)
+  gnt     Int?
+  m31     Int       @default(0)
+  m32     Int       @default(0)
+  m33     Int       @default(0)
+  m34     Int       @default(0)
+  rp1     Int       @default(0)
+  rp2     Int       @default(0)
+  rp3     Int       @default(0)
+  rp4     Int       @default(0)
+  hrgair  Int       @default(0)
+  dm      Int       @default(0)
+  adm     Int       @default(0)
+  tot     Int       @default(0)
+  meterai Int       @default(0)
+  denda   Int?      @default(0)
+  norek   String    @default("0") @db.VarChar(11)
+  kas     String?   @db.VarChar(20)
+  rekna   Int       @default(0)
+  angke   String?   @db.VarChar(7)
+  user    String?   @db.VarChar(20)
+  bw      String?   @db.VarChar(4)
+
+  @@id([periode, no_sam])
+  @@unique([periode, no_sam], map: "tes")
+}
+
+model tarif {
+  kode      Int     @default(0)
+  tarif     String  @default("") @db.VarChar(3)
+  golongan  String? @db.VarChar(20)
+  batas1    Int?
+  batas2    Int?
+  batas3    Int?
+  rp1       Int?
+  rp2       Int?
+  rp3       Int?
+  rp4       Int?
+  minimum   Int?
+  batas     Int?
+  khusus    Int?    @db.TinyInt
+  denda     Int?    @db.TinyInt
+  bk        Int?
+  jasameter Int?
+  jns       String  @db.VarChar(1)
+  dm        Int?
+  adm       Int?
+  mbr       String  @db.VarChar(1)
+
+  @@id([kode, jns, mbr])
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model tarif_230310 {
+  kode      Int     @default(0)
+  tarif     String  @default("") @db.VarChar(3)
+  golongan  String? @db.VarChar(20)
+  batas1    Int?
+  batas2    Int?
+  batas3    Int?
+  rp1       Int?
+  rp2       Int?
+  rp3       Int?
+  rp4       Int?
+  minimum   Int?
+  batas     Int?
+  khusus    Int?    @db.TinyInt
+  denda     Int?    @db.TinyInt
+  bk        Int?
+  jasameter Int?
+  jns       String? @db.VarChar(1)
+  dm        Int?
+  adm       Int?
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model tarif_mbr {
+  kode      Int     @default(0)
+  tarif     String  @default("") @db.VarChar(3)
+  golongan  String? @db.VarChar(20)
+  batas1    Int?
+  batas2    Int?
+  batas3    Int?
+  rp1       Int?
+  rp2       Int?
+  rp3       Int?
+  rp4       Int?
+  minimum   Int?
+  batas     Int?
+  khusus    Int?    @db.TinyInt
+  denda     Int?    @db.TinyInt
+  bk        Int?
+  jasameter Int?
+  jns       String? @db.VarChar(1)
+  dm        Int?
+  adm       Int?
+  mbr       String? @db.VarChar(1)
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model terlambat {
+  bln String? @db.VarChar(255)
+  tgl String? @db.VarChar(255)
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model tnp_denda {
+  kel    String? @db.VarChar(20)
+  no_sam String? @db.VarChar(10)
+  nm     String? @db.VarChar(30)
+  al     String? @db.VarChar(50)
+
+  @@ignore
+}
+
+model unit {
+  kd_un     String  @db.VarChar(2)
+  nm_un     String? @db.VarChar(50)
+  kd_wil    String  @db.VarChar(1)
+  nm_wil    String? @db.VarChar(50)
+  subwil    String  @db.VarChar(3)
+  nm_subwil String  @db.VarChar(50)
+  kd_jln    String? @db.VarChar(4)
+  kd_jlnb   String  @db.VarChar(3)
+  nm_jln    String? @db.VarChar(50)
+  jns       String? @db.VarChar(1)
+  dm        String? @db.Char(1)
+
+  @@id([kd_un, kd_wil, subwil, kd_jlnb])
+}
+
+model unit_komp {
+  kd_un  String  @id @db.VarChar(2)
+  nm_un  String? @db.VarChar(30)
+  kd_wil String? @db.VarChar(1)
+  nm_wil String? @db.VarChar(30)
+  kd_jln String? @db.VarChar(2)
+  nm_jln String? @db.VarChar(30)
+  jns    String? @db.VarChar(1)
+  komp   String? @db.VarChar(1)
+}
+
+model unit_x {
+  kd_un  String  @id @db.VarChar(2)
+  nm_un  String? @db.VarChar(30)
+  kd_wil String? @db.VarChar(1)
+  nm_wil String? @db.VarChar(30)
+  kd_jln String? @db.VarChar(2)
+  nm_jln String? @db.VarChar(30)
+  jns    String? @db.VarChar(1)
+}
+
+model user {
+  id   String  @id @db.VarChar(20)
+  nama String? @db.VarChar(30)
+  pass String? @db.VarChar(40)
+  bag  String? @db.VarChar(15)
+  lv   String? @db.Char(2)
+  cab  String? @db.VarChar(25)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model users {
+  id                BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  name              String    @db.VarChar(255)
+  email             String    @unique(map: "users_email_unique") @db.VarChar(255)
+  email_verified_at DateTime? @db.Timestamp(0)
+  password          String    @db.VarChar(255)
+  remember_token    String?   @db.VarChar(100)
+  created_at        DateTime? @db.Timestamp(0)
+  updated_at        DateTime? @db.Timestamp(0)
+}
