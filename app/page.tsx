@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 export default function Home() {
   const res =  {
-    app : "API MITRA PPOB Perumdam Trunojoo Sampang",
+    app : "API PDAM NGANJUK",
     versi : "Versi 1.0"
   }
 
